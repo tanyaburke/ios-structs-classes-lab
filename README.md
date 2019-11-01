@@ -24,9 +24,15 @@ fred.name = "Brick"
 fred.weight = 999.2
 fred.homePlanet = "Mars"
 ```
+The last line of code will not run, homeplanet is declared as a immutable variable
 
 Fix the class definition for `Giant` in the space below so that it **does** work:
 
+class Giant {
+ var name: String = "Fred"
+ var weight: Double = 340.0
+ var homePlanet: String = "Earth"
+}
 
 ## Question 2
 
@@ -48,9 +54,11 @@ bilbo.name = "Jake"
 bilbo.height = 1.42
 bilbo.homePlanet = "Saturn"
 ```
+It will not run because Bilbo is declared as a constant variable
 
 Change the declaration of `bilbo` so that the above three lines of code **do** work:
 
+var bilbo = Alien(name: "Bilbo", height: 1.67, homePlanet: "Venus")
 
 ## Question 3
 
@@ -65,6 +73,11 @@ jason.name = "Jason"
 
 What will the value of `edgar.name` be after those three lines of code are run? What will the value of `jason.name` be? Why?
 
+edgar.name will be Jason
+jason.name will be Jason as well
+
+Initially, edgar.name was edgar, then at line 69, .name was still edgar, but at line 70 .name  was assgned Jason
+
 
 ## Question 4
 
@@ -78,6 +91,10 @@ charlesFromJupiter.homePlanet = "Jupiter"
 
 What will the value of `charles.homePlanet` be after the above code run? What about the value of `charlesFromJupiter.homePlanet`? Why?
 
+`charles.homePlanet` = Pluto
+`charlesFromJupiter.homePlanet` = Jupiter
+
+charles.homplanet was assigned Pluto, so CharlesFromJupiter assigned its home planet to jupiter, it changed, but did not change Charles, it just made a copy and added to the copy not the original.
 
 ## Question 5
 
@@ -100,7 +117,22 @@ struct BankAccount {
 
 Does this code work? Why or why not?
 
+Does not work. It is changing the property of the struct. A struct is a copy, that is not suppose to be changed.
+
 Fix the `BankAccount` struct so it does work.
+
+struct BankAccount {
+ var owner: String
+ var balance: Double
+
+ mutating func deposit(_ amount: Double) {
+ balance += amount
+ }
+
+ mutating func withdraw(_ amount: Double) {
+ balance -= amount
+ }
+}
 
 Given the code below (which should incorporate any fixes you made):
 
@@ -112,6 +144,9 @@ joeAccount.withdraw(50.0)
 
 What will the value of `joeAccount.balance` be after the above code runs? What about the value of `joeOtherAccount.balance`? Why?
 
+`joeAccount.balance` will be 100, it will remain at 100, the other account was just a copy
+ `joeOtherAccount.balance` this will be 50
+
 
 ## Question 6
 
@@ -120,6 +155,22 @@ a. Write a struct called `Person` that has 3 properties of type `String`: a firs
 
 b. Write a method in `Person` called `fullName` that will return a formatted string of an instance's full name. Call this method on both the instances you created in part a.
 
+struct Person {
+   var firstName: String
+    var lastName: String
+    var middleName: String?
+    
+    func fullName() -> String {
+   
+        return firstName + " " + (middleName ?? "") + " " + lastName
+    }
+}
+
+var jill = Person(firstName: "Jill", lastName: "Murphy")
+var bill = Person(firstName: "Bill", lastName: "new", middleName: "hfghf" )
+
+print(jill.fullName())
+print(bill.fullName())
 
 ## Question 7
 
@@ -127,6 +178,24 @@ a. Create a struct called `Book` that has properties `title`, `author` and `rati
 
 
 b. Add a method to `Book` called `isGood` that returns `true` if its rating is greater than or equal to 7
+
+struct Book{
+    var title: String
+    var author: String
+    var rating: Double
+    
+    func isGood() -> Bool{
+        if rating >= 7{
+            return true
+        }else{
+            return false
+    }
+}
+}
+
+var book1 = Book(title: "Me", author: "myself", rating: 24)
+print(book1.isGood())
+
 
 
 ## Question 8
@@ -138,6 +207,18 @@ class Dog {
 ```
 
 Work through the following tasks one by one, in order. Each time, add to the `Dog` class above. Each task has sample output that you should be able to replicate when you are done.
+
+class Dog {
+    var name: String = "Fido"
+    var breed: String = "unknown"
+    var mood: String = "happy"
+    var hungry: Bool = false
+}
+
+var dog1 = Dog()
+dog1.name = "dog"
+dog1.mood = "calm"
+
 
 a. Give `Dog` four properties, all with default values: `name (string), breed (string), mood (string), and hungry (boolean)`.
 
